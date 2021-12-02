@@ -10,7 +10,12 @@ There is no validation whether input JSON is valid or not, but invalid input gen
 ## Getting started
 
 Maven dependency:
-TBD...
+
+    <dependency>
+        <groupId>com.wsojka</groupId>
+        <artifactId>cute-json</artifactId>
+        <version>0.1</version>
+    </dependency>
 
 ## Example
 
