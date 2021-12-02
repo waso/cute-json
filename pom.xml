@@ -42,7 +42,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/waso/cute-json.git</connection>
-        <developerConnection>scm:git:ssh://github.com:waso/cute-json.git</developerConnection>
+        <developerConnection>scm:git:ssh://github.com/waso/cute-json.git</developerConnection>
         <url>https://github.com/waso/cute-json/tree/develop</url>
       <tag>cute-json-0.1</tag>
   </scm>
