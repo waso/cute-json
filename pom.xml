@@ -5,7 +5,7 @@
 
     <groupId>com.wsojka</groupId>
     <artifactId>cute-json</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <name>cute-json</name>
     <description>Fast json formatter for Java</description>
@@ -41,9 +41,10 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:git://github.com/waso/cute-json.git</connection>
+        <connection>scm:git:ssh://git@github.com/waso/cute-json.git</connection>
         <developerConnection>scm:git:ssh://github.com/waso/cute-json.git</developerConnection>
         <url>https://github.com/waso/cute-json/tree/develop</url>
+    <tag>cute-json-0.1</tag>
   </scm>
 
     <dependencies>
