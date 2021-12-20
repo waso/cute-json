@@ -17,31 +17,29 @@ Maven dependency:
         <version>0.2</version>
     </dependency>
 
-## Example
+## Examples
+
+### Formatting with default settings 
 
     String formattedJson = CuteJson.format("{\"name\":\"john\"}");
 
-## Example with configuration
+### Custom formatting configuration using space character
+    String source = "{\"name\":\"john\"}";
+    CuteJson cuteJson = CuteJsonBuilder
+            .create()
+            .withIndentationPolicy(IndentationPolicy.SPACES)
+            .withSpaceCount(6)
+            .build();
+    String formatted = cuteJson.read(source).format();
 
-### Custom formatting settings using space character
-        String source = "{\"name\":\"john\"}";
-        CuteJson cuteJson = CuteJsonBuilder
-                .create()
-                .withIndentationPolicy(IndentationPolicy.SPACES)
-                .withSpaceCount(6)
-                .build();
+### Custom formatting configuration using tab character
 
-        String formatted = cuteJson.read(source).format();
-
-### Custom formatting settings using tab character
-
-        String source = "{\"name\":\"john\"}";
-        CuteJson cuteJson = CuteJsonBuilder
-                .create()
-                .withIndentationPolicy(IndentationPolicy.TABS)
-                .build();
-
-        String formatted = cuteJson.read(source).format();
+    String source = "{\"name\":\"john\"}";
+    CuteJson cuteJson = CuteJsonBuilder
+            .create()
+            .withIndentationPolicy(IndentationPolicy.TABS)
+            .build();
+    String formatted = cuteJson.read(source).format();
 
 ## Credits
 
