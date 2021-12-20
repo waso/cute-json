@@ -14,12 +14,34 @@ Maven dependency:
     <dependency>
         <groupId>com.wsojka</groupId>
         <artifactId>cute-json</artifactId>
-        <version>0.1</version>
+        <version>0.2</version>
     </dependency>
 
 ## Example
 
     String formattedJson = CuteJson.format("{\"name\":\"john\"}");
+
+## Example with configuration
+
+### Custom formatting settings using space character
+        String source = "{\"name\":\"john\"}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.SPACES)
+                .withSpaceCount(6)
+                .build();
+
+        String formatted = cuteJson.read(source).format();
+
+### Custom formatting settings using tab character
+
+        String source = "{\"name\":\"john\"}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.TABS)
+                .build();
+
+        String formatted = cuteJson.read(source).format();
 
 ## Credits
 
