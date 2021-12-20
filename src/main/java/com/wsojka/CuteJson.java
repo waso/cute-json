@@ -26,22 +26,70 @@ package com.wsojka;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * CuteJson is a fast stateless JSON formatter.
+ * {@code CuteJson} is a fast stateless JSON formatter.
  * There is no validation whether source JSON is valid or not.
  *
  * @author Waldemar Sojka
  */
 public class CuteJson {
 
-    private static final String TAB = StringUtils.repeat(' ', 4);
+    private static final char TAB = '\t';
+
+    private static final char SPACE = ' ';
+
+    private final Configuration configuration;
+
+    private String json;
 
     /**
-     * Formats JSON string without any validation.
+     * Constructs new instance of {@code CuteJson} with provided configuration
+     *
+     * @param configuration configuration class
+     */
+    public CuteJson(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    /**
+     * Reads source json
+     *
+     * @param json json to format
+     * @return instance of CuteJson
+     */
+    public CuteJson read(String json) {
+        this.json = json;
+        return this;
+    }
+
+    /**
+     * Formats json provided via {@link #read(String)} method.
+     * Throws {@code IllegalArgumentException} when configuration is null.
+     *
+     * @return formatted JSON string
+     */
+    public String format() {
+        return formatJson(this.json, this.configuration);
+    }
+
+    /**
+     * Formats JSON string using default settings.
+     * For {@code null} input String, return {@code null}.
+     * Throws {@code IllegalArgumentException} when configuration is null.
      *
      * @param source source JSON string
      * @return formatted JSON string
      */
     public static String format(final String source) {
+        return formatJson(source, new Configuration());
+    }
+
+    private static String formatJson(final String source, Configuration conf) {
+        if (source == null)
+            return null;
+        if (source.isEmpty())
+            return source;
+        if (conf == null)
+            throw new IllegalArgumentException("invalid or missing configuration");
         StringBuilder sb = new StringBuilder();
         boolean isRegularChar = false;
         boolean ignoreWhiteSpace = true;
@@ -73,32 +121,32 @@ public class CuteJson {
                     } else {
                         sb.append(source.charAt(i));
                         indent++;
-                        sb.append("\n" + StringUtils.repeat(TAB, indent));
+                        sb.append("\n" + addIndent(indent, conf));
                     }
                     break;
                 case '{':
                     sb.append(source.charAt(i));
                     indent++;
-                    sb.append("\n" + StringUtils.repeat(TAB, indent));
+                    sb.append("\n" + addIndent(indent, conf));
                     break;
                 case ']':
                     if (isRegularChar) {
                         sb.append(source.charAt(i));
                     } else {
                         indent--;
-                        sb.append("\n" + StringUtils.repeat(TAB, indent));
+                        sb.append("\n" + addIndent(indent, conf));
                         sb.append(source.charAt(i));
                     }
                     break;
                 case '}':
                     indent--;
-                    sb.append("\n" + StringUtils.repeat(TAB, indent));
+                    sb.append("\n" + addIndent(indent, conf));
                     sb.append(source.charAt(i));
                     break;
                 case ',':
                     sb.append(source.charAt(i));
                     if (!isRegularChar)
-                        sb.append("\n" + StringUtils.repeat(TAB, indent));
+                        sb.append("\n" + addIndent(indent, conf));
                     break;
                 default:
                     sb.append(source.charAt(i));
@@ -106,5 +154,12 @@ public class CuteJson {
             }
         }
         return sb.toString();
+    }
+
+    private static String addIndent(int indent, Configuration conf) {
+        if (conf.getIndentationPolicy() == IndentationPolicy.TABS)
+            return StringUtils.repeat(TAB, indent);
+        else
+            return StringUtils.repeat(StringUtils.repeat(SPACE, conf.getSpaceCount()), indent);
     }
 }

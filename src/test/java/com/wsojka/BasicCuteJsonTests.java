@@ -28,13 +28,123 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BasicCuteJsonTests {
+
     @Test
-    public void formatSimpleJson() {
+    public void formatSimpleJsonTest() {
         String source = "{\"name\":\"john\"}";
         String expectedJson = "{\n" +
                 "    \"name\": \"john\"\n" +
                 "}";
         String actualJson = CuteJson.format(source);
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void customSettings6SpacesTest() {
+        String source = "{\"name\":\"john\"}";
+        String expectedJson = "{\n" +
+                "      \"name\": \"john\"\n" +
+                "}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.SPACES)
+                .withSpaceCount(6)
+                .build();
+
+        String actualJson = cuteJson.read(source).format();
+
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void customSettings1SpaceTest() {
+        String source = "{\"name\":\"john\"}";
+        String expectedJson = "{\n" +
+                " \"name\": \"john\"\n" +
+                "}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.SPACES)
+                .withSpaceCount(1)
+                .build();
+
+        String actualJson = cuteJson.read(source).format();
+
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void customSettings4SpacesExtendedTest() {
+        String source = "{\"person\":{\"age\":20,\"address\":{\"country\":\"Poland\"}}}";
+        String expectedJson = "{\n" +
+                "    \"person\": {\n" +
+                "        \"age\": 20,\n" +
+                "        \"address\": {\n" +
+                "            \"country\": \"Poland\"\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.SPACES)
+                .withSpaceCount(4)
+                .build();
+
+        String actualJson = cuteJson.read(source).format();
+
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void customSettingsWithTabTest() {
+        String source = "{\"name\":\"john\"}";
+        String expectedJson = "{\n" +
+                "\t\"name\": \"john\"\n" +
+                "}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.TABS)
+                .build();
+
+        String actualJson = cuteJson.read(source).format();
+
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void customSettingsWithTabExtendedTest() {
+        String source = "{\"person\":{\"age\":20,\"address\":{\"country\":\"Poland\"}}}";
+        String expectedJson = "{\n" +
+                "\t\"person\": {\n" +
+                "\t\t\"age\": 20,\n" +
+                "\t\t\"address\": {\n" +
+                "\t\t\t\"country\": \"Poland\"\n" +
+                "\t\t}\n" +
+                "\t}\n" +
+                "}";
+        CuteJson cuteJson = CuteJsonBuilder
+                .create()
+                .withIndentationPolicy(IndentationPolicy.TABS)
+                .build();
+
+        String actualJson = cuteJson.read(source).format();
+
+        assertEquals(expectedJson, actualJson);
+    }
+
+    @Test
+    public void customSettingsBuilderTest() {
+        String source = "{\"name\":\"john\"}";
+        String expectedJson = "{\n" +
+                "      \"name\": \"john\"\n" +
+                "}";
+        CuteJsonBuilder cuteJsonBuilder = CuteJsonBuilder.create();
+        cuteJsonBuilder.withIndentationPolicy(IndentationPolicy.SPACES);
+        cuteJsonBuilder.withSpaceCount(6);
+
+        CuteJson cuteJson = cuteJsonBuilder.build();
+        String actualJson = cuteJson.read(source).format();
+
         assertEquals(expectedJson, actualJson);
     }
 }
