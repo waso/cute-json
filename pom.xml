@@ -5,7 +5,7 @@
 
     <groupId>com.wsojka</groupId>
     <artifactId>cute-json</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
 
     <name>cute-json</name>
     <description>Fast json formatter for Java</description>
